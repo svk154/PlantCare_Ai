@@ -1,6 +1,6 @@
 # 🚀 Quick Start - Database Setup
 
-## Option 1: Automated Script (Recommended) ⭐
+## Automated Script
 
 Use the new automated Python script that creates everything for you:
 
@@ -30,39 +30,6 @@ python create_database_and_tables.py
 
 ---
 
-## Option 2: Manual Setup (Traditional)
-
-### Step 1: Create Database Manually
-
-```bash
-mysql -u root -p -e "CREATE DATABASE plantcare_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
-```
-
-### Step 2: Create Tables Using Flask Migrations
-
-```bash
-cd backend
-pip install -r requirements.txt
-flask db upgrade
-```
-
-### Step 3: Verify Setup
-
-```bash
-python check_crop_db_status.py
-```
-
----
-
-## Comparison
-
-| Method | Ease | Speed | Verification | Best For |
-|--------|------|-------|--------------|----------|
-| **Automated Script** | ⭐⭐⭐⭐⭐ | 2 min | Built-in ✅ | First-time setup |
-| **Manual Setup** | ⭐⭐⭐ | 5 min | Manual 📝 | Experienced users |
-
----
-
 ## Troubleshooting
 
 ### Script Method Issues:
@@ -79,21 +46,6 @@ pip install mysql-connector-python
 **Problem:** `Database already exists`
 - Script will ask if you want to drop and recreate
 - Type `yes` to recreate or `no` to use existing
-
----
-
-### Manual Method Issues:
-
-**Problem:** `Unknown database`
-```bash
-mysql -u root -p -e "CREATE DATABASE plantcare_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
-```
-
-**Problem:** `Table doesn't exist`
-```bash
-cd backend
-flask db upgrade
-```
 
 ---
 
@@ -129,9 +81,6 @@ npm start
 ---
 
 ## 📚 Full Documentation
-
-- **Automated Script Details:** `backend/DATABASE_SETUP_GUIDE.md`
-- **Complete Database Schema:** `DATABASE_README.md`
 - **Project Documentation:** `README.md`
 
 ---
