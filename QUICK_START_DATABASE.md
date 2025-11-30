@@ -30,25 +30,6 @@ python create_database_and_tables.py
 
 ---
 
-## Troubleshooting
-
-### Script Method Issues:
-
-**Problem:** `ModuleNotFoundError: No module named 'mysql.connector'`
-```bash
-pip install mysql-connector-python
-```
-
-**Problem:** `Access denied for user`
-- Verify MySQL username and password
-- Ensure MySQL server is running
-
-**Problem:** `Database already exists`
-- Script will ask if you want to drop and recreate
-- Type `yes` to recreate or `no` to use existing
-
----
-
 ## After Setup
 
 Once database is created, configure your `.env` file:
@@ -84,5 +65,4 @@ npm start
 - **Project Documentation:** `README.md`
 
 ---
-
 **Recommendation:** Use the **automated script** for hassle-free setup! 🎉
