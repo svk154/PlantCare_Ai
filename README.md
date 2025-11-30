@@ -6,7 +6,7 @@ A comprehensive plant care management system with AI-powered disease detection, 
 
 ### ⚠️ IMPORTANT: Database Setup is MANDATORY!
 
-**READ FIRST:** See [IMPORTANT_READ_FIRST.md](IMPORTANT_READ_FIRST.md) for critical setup instructions.
+**READ FIRST:** See [IMPORTANT_READ_FIRST.md](Quick Start - Database Setup.md) for critical setup instructions.
 
 **You MUST create the database and tables BEFORE running the application!**
 
@@ -33,27 +33,6 @@ npm install
 npm start
 ```
 
-### Alternative Setup (Manual)
-```bash
-# 1. Create database manually
-mysql -u root -p -e "CREATE DATABASE plantcare_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
-
-# 2. Create tables using Flask migrations
-cd backend
-pip install -r requirements.txt
-flask db upgrade
-
-# 3. Verify database setup
-python check_crop_db_status.py
-
-# 4. Configure .env files and start servers
-python run.py  # Backend
-cd ../frontend && npm start  # Frontend
-```
-
-### For New Users
-Follow the detailed [Installation & Setup](#installation--setup) section below.
-
 ## ⚠️ Prerequisites Checklist
 
 Before starting, ensure you have completed ALL of the following:
@@ -64,7 +43,6 @@ Before starting, ensure you have completed ALL of the following:
 - [ ] **Ran database setup script:** `python create_database_and_tables.py` ✅ **CRITICAL!**
   - This creates the `plantcare_db` database
   - This creates all 17 required tables
-  - **See [IMPORTANT_READ_FIRST.md](IMPORTANT_READ_FIRST.md)** for detailed instructions
 
 ### Required:
 - [ ] **Node.js 16+** and npm installed
@@ -127,9 +105,7 @@ cd plantCare_update
 
 ### 2. Database Setup (🔴 CRITICAL - MUST BE COMPLETED FIRST)
 
-**⚠️ MANDATORY PREREQUISITE**: You **MUST** run the database setup script before running the application!
-
-**📖 READ FIRST: [IMPORTANT_READ_FIRST.md](IMPORTANT_READ_FIRST.md)**
+**⚠️ MANDATORY PREREQUISITE**: You **MUST** run the database setup Quick Start - Database Setup script before running the application!
 
 #### ⭐ Recommended: Automated Database Setup (2 Minutes)
 
@@ -155,26 +131,6 @@ python create_database_and_tables.py
 - ✅ Adds performance indexes
 - ✅ Verifies setup automatically
 - ✅ Shows real-time progress with color-coded output
-
-#### Alternative: Manual Database Setup
-
-```bash
-# Step 1: Create database
-mysql -u root -p -e "CREATE DATABASE plantcare_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
-
-# Step 2: Create tables using Flask migrations
-cd backend
-flask db upgrade
-
-# Step 3: Verify setup
-python check_crop_db_status.py
-```
-
-#### 📚 Complete Documentation
-
-- **[IMPORTANT_READ_FIRST.md](IMPORTANT_READ_FIRST.md)** - Why this is mandatory & quick setup
-- **[backend/DATABASE_SETUP_GUIDE.md](backend/DATABASE_SETUP_GUIDE.md)** - Complete script usage guide
-- **[DATABASE_README.md](DATABASE_README.md)** - Full database schema documentation
 
 ### 3. Backend Setup
 
@@ -219,37 +175,6 @@ MAIL_DEFAULT_SENDER=your-email@gmail.com
 
 # Weather API (optional)
 WEATHER_API_KEY=your_openweather_api_key_here
-```
-
-#### Create Database Tables
-After configuring the `.env` file, create all required tables:
-
-**Method 1: Using Flask-Migrate (Recommended)**
-```bash
-cd backend
-
-# Initialize migrations (if not already done)
-flask db init
-
-# Generate migration
-flask db migrate -m "Initial database setup"
-
-# Apply migrations to create all tables
-flask db upgrade
-```
-
-**Method 2: Using Python Script (Alternative)**
-If migrations fail, use the manual table creation script:
-```bash
-cd backend
-python create_crop_tables.py
-```
-
-**Method 3: Verify Database Status**
-Check if all tables are created correctly:
-```bash
-cd backend
-python check_crop_db_status.py
 ```
 
 #### Start Backend Server
@@ -480,42 +405,6 @@ net start MySQL80  # or your MySQL service name
 sudo systemctl start mysql
 ```
 
-### Migration Errors
-
-**Problem**: `Target database is not up to date`
-```bash
-cd backend
-flask db stamp head  # Mark current state as up-to-date
-flask db migrate -m "Sync models"
-flask db upgrade
-```
-
-**Problem**: `Table already exists`
-```bash
-# Option 1: Drop the conflicting table manually
-mysql -u root -p plantcare_db -e "DROP TABLE IF EXISTS table_name;"
-
-# Option 2: Use checkfirst=True in Python
-python create_crop_tables.py
-```
-
-### Foreign Key Constraint Errors
-
-**Problem**: `Cannot add or update a child row: a foreign key constraint fails`
-
-**Solution**: Ensure parent records exist before inserting child records
-```python
-# Example: Create user before creating farm
-user = User(email="test@example.com", name="Test User")
-db.session.add(user)
-db.session.commit()
-
-# Now create farm with valid user_id
-farm = Farm(name="Test Farm", user_id=user.id, main_crop="Wheat", size_acres=10)
-db.session.add(farm)
-db.session.commit()
-```
-
 ### Missing Environment Variables
 
 **Problem**: `ValueError: No SECRET_KEY set in environment variables`
@@ -679,49 +568,33 @@ flask db upgrade
 
 ### Database Setup Questions
 
-**Q1: Do I need to create the database manually?**
-> **A:** Yes! Creating the database is a mandatory prerequisite. The application cannot create the database automatically. You must run:
-> ```sql
-> CREATE DATABASE plantcare_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+**Q1: Do I need to create the database ?**
+> **A:** Yes! Creating the database is a mandatory prerequisite. The python code file create the database automatically. You must run:
+> ```The automated database py script code
 > ```
 
 **Q2: What happens if I skip the database setup?**
 > **A:** The application will fail to start with database connection errors. All features require a properly configured database with tables.
 
-**Q3: How do I know if all tables are created correctly?**
-> **A:** Run the verification script:
-> ```bash
-> cd backend
-> python check_crop_db_status.py
-> ```
-> Or check manually:
-> ```sql
-> mysql -u root -p plantcare_db -e "SHOW TABLES;"
-> ```
-> You should see 17 tables listed.
-
-**Q4: Can I use a different database name?**
+**Q3: Can I use a different database name?**
 > **A:** Yes, but you must update the `MYSQL_DB` variable in your `.env` file to match your chosen database name.
 
-**Q5: What is the correct order to create tables?**
-> **A:** Use `flask db upgrade` which handles the correct order automatically. If creating manually, start with `users` table first, then `farms`, then dependent tables.
-
-**Q6: Do all tables have foreign keys?**
+**Q4: Do all tables have foreign keys?**
 > **A:** No. The following tables have NO foreign keys and can be created independently:
 > - `users` (core table)
 > - `disease_info` (reference data)
 > - `weather_data` (cache table)
 
-**Q7: What tables depend on the users table?**
+**Q5: What tables depend on the users table?**
 > **A:** 13 tables have foreign keys to `users`: farms, disease_detections, disease_scans, forum_posts, forum_replies, forum_votes, farm_ledger, monitored_crops, calculator_results, calculator_history, crop_recommendations, crop_yield_predictions, and farm_notes.
 
-**Q8: Can I delete a user without breaking the database?**
+**Q6: Can I delete a user without breaking the database?**
 > **A:** Deleting a user will affect all related records. Some tables use CASCADE delete (automatically delete related records), others may prevent deletion. It's recommended to implement a "soft delete" or archive feature instead.
 
-**Q9: Why do some foreign keys allow NULL values?**
+**Q7: Why do some foreign keys allow NULL values?**
 > **A:** Optional foreign keys (like `farm_id` in `monitored_crops`) allow records to exist independently. For example, a crop can be monitored without being linked to a specific farm.
 
-**Q10: How do I reset the database completely?**
+**Q8: How do I reset the database completely?**
 > **A:** 
 > ```sql
 > DROP DATABASE IF EXISTS plantcare_db;
@@ -731,19 +604,19 @@ flask db upgrade
 
 ### Technical Questions
 
-**Q11: What MySQL version is required?**
+**Q1: What MySQL version is required?**
 > **A:** MySQL 5.7 or higher. MySQL 8.0 is recommended for better performance and JSON support.
 
-**Q12: Can I use MariaDB instead of MySQL?**
+**Q2: Can I use MariaDB instead of MySQL?**
 > **A:** Yes, MariaDB 10.2+ is compatible. Update your connection string if needed.
 
-**Q13: Why UTF8MB4 character set?**
+**Q3: Why UTF8MB4 character set?**
 > **A:** UTF8MB4 supports full Unicode including emojis and special characters. It's essential for international character support.
 
-**Q14: How are passwords stored?**
+**Q4: How are passwords stored?**
 > **A:** Passwords are hashed using Werkzeug's security functions (bcrypt-based) and stored in the `password_hash` column. Plain passwords are never stored.
 
-**Q15: What happens if I change the database schema?**
+**Q5: What happens if I change the database schema?**
 > **A:** You must create a new migration:
 > ```bash
 > flask db migrate -m "Description of changes"
@@ -752,25 +625,25 @@ flask db upgrade
 
 ### Common Setup Issues
 
-**Q16: "Access denied for user" error?**
+**Q1: "Access denied for user" error?**
 > **A:** Check your `.env` file:
 > - Verify `MYSQL_USER` and `MYSQL_PASSWORD` are correct
 > - Ensure the user has proper privileges on `plantcare_db`
 > - Test connection: `mysql -u your_user -p plantcare_db`
 
-**Q17: "Unknown database" error?**
+**Q2: "Unknown database" error?**
 > **A:** The database doesn't exist. Create it first:
 > ```bash
 > mysql -u root -p -e "CREATE DATABASE plantcare_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
 > ```
 
-**Q18: Tables created but queries fail?**
+**Q3: Tables created but queries fail?**
 > **A:** Check if foreign key constraints are properly set up:
 > ```sql
 > SHOW CREATE TABLE table_name;
 > ```
 
-**Q19: How do I verify foreign key relationships?**
+**Q4: How do I verify foreign key relationships?**
 > **A:** Use this query:
 > ```sql
 > SELECT TABLE_NAME, COLUMN_NAME, REFERENCED_TABLE_NAME, REFERENCED_COLUMN_NAME
@@ -778,7 +651,7 @@ flask db upgrade
 > WHERE REFERENCED_TABLE_SCHEMA = 'plantcare_db' AND REFERENCED_TABLE_NAME IS NOT NULL;
 > ```
 
-**Q20: Can I use this with Docker?**
+**Q5: Can I use this with Docker?**
 > **A:** Yes! Create a `docker-compose.yml` with MySQL service and update `MYSQL_HOST` to the service name. Full Docker setup instructions can be added if needed.
 
 ## License
