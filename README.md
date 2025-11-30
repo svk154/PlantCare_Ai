@@ -6,7 +6,7 @@ A comprehensive plant care management system with AI-powered disease detection, 
 
 ### ⚠️ IMPORTANT: Database Setup is MANDATORY!
 
-**READ FIRST:** See [IMPORTANT_READ_FIRST.md](Quick Start - Database Setup.md) for critical setup instructions.
+**READ FIRST:** See Quick Start - Database Setup.md for critical setup instructions.
 
 **You MUST create the database and tables BEFORE running the application!**
 
