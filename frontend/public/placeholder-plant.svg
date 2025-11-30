@@ -1,0 +1,11 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="200" height="200" fill="#F3F4F6"/>
+<path d="M100 50C115 50 127 62 127 77V123C127 138 115 150 100 150S73 138 73 123V77C73 62 85 50 100 50Z" fill="#4CAF50"/>
+<circle cx="90" cy="85" r="6" fill="#FFF"/>
+<circle cx="110" cy="85" r="6" fill="#FFF"/>
+<path d="M85 120C85 115 92 110 100 110S115 115 115 120" stroke="#FFF" stroke-width="2" stroke-linecap="round"/>
+<path d="M100 50L100 30M100 30L95 35M100 30L105 35" stroke="#2E7D32" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M85 65L75 55M75 55L78 52M75 55L72 58" stroke="#2E7D32" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M115 65L125 55M125 55L122 52M125 55L128 58" stroke="#2E7D32" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="100" y="175" text-anchor="middle" fill="#6B7280" font-family="Arial, sans-serif" font-size="12">Plant Image</text>
+</svg>
